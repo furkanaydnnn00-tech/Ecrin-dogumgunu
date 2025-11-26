@@ -6,11 +6,16 @@
 <title>Doğum Günün Kutlu Olsun!</title>
 
 <style>
+    /* Google Fonts linkini ekliyoruz (Eğer tarayıcı desteklerse daha iyi görünür) */
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
     body {
         margin: 0;
         height: 100vh;
+        /* Arka plan rengi */
         background: linear-gradient(120deg, #ff7eb3, #ff758c, #ffb199);
         display: flex;
+        flex-direction: column; /* Öğeleri dikeyde ortalamak için */
         justify-content: center;
         align-items: center;
         overflow: hidden;
@@ -24,6 +29,7 @@
         animation: fadeIn 2s ease-in-out forwards;
         opacity: 0;
         padding: 0 20px;
+        margin-bottom: 20px; /* Butondan ayırmak için */
     }
 
     @keyframes fadeIn {
@@ -31,7 +37,6 @@
     }
 
     .button {
-        margin-top: 20px;
         padding: 12px 25px;
         background: white;
         color: #ff4f82;
@@ -40,6 +45,7 @@
         cursor: pointer;
         font-size: 1.2rem;
         transition: .3s;
+        z-index: 10; /* Balonların üstünde olması için */
     }
 
     .button:hover {
@@ -49,18 +55,20 @@
 
     /* Pasta animasyonu */
     .cake {
-        width: 140px;
+        width: 180px; /* Resmin boyutunu biraz büyüttüm */
+        height: auto;
         position: absolute;
-        bottom: -150px;
+        bottom: -250px; /* Ekrandan daha aşağıda başlasın */
         left: 50%;
         transform: translateX(-50%);
         animation: cakeUp 3s ease forwards;
         display: none;
+        z-index: 5;
     }
 
     @keyframes cakeUp {
-        0% { bottom: -200px; opacity: 0; }
-        100% { bottom: 40px; opacity: 1; }
+        0% { bottom: -250px; opacity: 0; }
+        100% { bottom: 50px; opacity: 1; } /* Pastanın duracağı son nokta */
     }
 
     /* Mum */
@@ -72,8 +80,9 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 120px;
+        bottom: 160px; /* Pastanın üzerinde durması için ayarlandı */
         display: none;
+        z-index: 6;
     }
 
     /* Alev */
@@ -85,10 +94,11 @@
         position: absolute;
         left: 50%;
         transform: translateX(-50%);
-        bottom: 145px;
+        bottom: 185px; /* Mumun üzerinde durması için ayarlandı */
         opacity: 0.9;
         animation: flicker 0.15s infinite alternate;
         display: none;
+        z-index: 7;
     }
 
     @keyframes flicker {
@@ -103,6 +113,7 @@
         height: 10px;
         top: -20px;
         animation: fall 3s linear infinite;
+        z-index: 99; /* En üstte olması için */
     }
 
     @keyframes fall {
@@ -115,9 +126,9 @@
         width: 40px;
         height: 55px;
         border-radius: 50%;
-        background: white;
         opacity: 0.75;
         animation: float 6s infinite ease-in;
+        z-index: 1;
     }
 
     @keyframes float {
@@ -135,18 +146,18 @@
 
 <h2 id="message" style="margin-top:20px; display:none; font-size:1.8rem;"></h2>
 
-<!-- Pasta -->
-<img class="cake" id="cake" src="https://i.imgur.com/Er7u5oZ.png">
+<img class="cake" id="cake" src="pasta.png">
 
-<!-- Mum -->
 <div class="candle" id="candle"></div>
 <div class="flame" id="flame"></div>
 
-<!-- Müzik -->
 <audio id="music" src="music.mp3"></audio>
 
 <script>
     function surprise() {
+        // Butonu gizle veya değiştir
+        document.querySelector('.button').style.display = 'none';
+
         // Mesaj
         const msg = document.getElementById("message");
         msg.innerText = "Nice mutlu, sağlıklı, harika yıllara! 🎈✨";
@@ -160,7 +171,9 @@
         document.getElementById("flame").style.display = "block";
 
         // Müzik başlat
-        document.getElementById("music").play();
+        const music = document.getElementById("music");
+        music.volume = 0.6; // Sesi biraz azalttım, çok yüksek çalmasın
+        music.play();
 
         // Konfeti yağmuru
         for (let i = 0; i < 60; i++) {
