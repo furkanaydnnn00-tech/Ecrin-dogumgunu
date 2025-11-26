@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Doğum Günün Kutlu Olsun!</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        background: linear-gradient(120deg, #ff7eb3, #ff758c, #ffb199);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: 'Poppins', sans-serif;
+        color: white;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        animation: fadeIn 2s ease-in-out forwards;
+        opacity: 0;
+        padding: 0 20px;
+    }
+
+    @keyframes fadeIn {
+        to { opacity: 1; }
+    }
+
+    .button {
+        margin-top: 20px;
+        padding: 12px 25px;
+        background: white;
+        color: #ff4f82;
+        border-radius: 12px;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: .3s;
+    }
+
+    .button:hover {
+        transform: scale(1.1);
+        background: #ffe4ec;
+    }
+
+    /* Pasta animasyonu */
+    .cake {
+        width: 140px;
+        position: absolute;
+        bottom: -150px;
+        left: 50%;
+        transform: translateX(-50%);
+        animation: cakeUp 3s ease forwards;
+        display: none;
+    }
+
+    @keyframes cakeUp {
+        0% { bottom: -200px; opacity: 0; }
+        100% { bottom: 40px; opacity: 1; }
+    }
+
+    /* Mum */
+    .candle {
+        width: 12px;
+        height: 35px;
+        background: #fff5e6;
+        border-radius: 4px;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 120px;
+        display: none;
+    }
+
+    /* Alev */
+    .flame {
+        width: 14px;
+        height: 22px;
+        background: radial-gradient(circle, #ffeb3b 30%, #ff9800 70%);
+        border-radius: 50%;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 145px;
+        opacity: 0.9;
+        animation: flicker 0.15s infinite alternate;
+        display: none;
+    }
+
+    @keyframes flicker {
+        0% { transform: translateX(-50%) scale(1); opacity: 0.9; }
+        100% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+    }
+
+    /* Konfeti */
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        top: -20px;
+        animation: fall 3s linear infinite;
+    }
+
+    @keyframes fall {
+        to { transform: translateY(120vh) rotate(360deg); }
+    }
+
+    /* Balonlar */
+    .balloon {
+        position: absolute;
+        width: 40px;
+        height: 55px;
+        border-radius: 50%;
+        background: white;
+        opacity: 0.75;
+        animation: float 6s infinite ease-in;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh); }
+        to { transform: translateY(-120vh); }
+    }
+</style>
+</head>
+
+<body>
+
+<h1>🎉 DOĞUM GÜNÜN KUTLU OLSUN DOĞUM GÜNÜ KIZI 🎂</h1>
+
+<button class="button" onclick="surprise()">Sürprize Tıkla 🎁</button>
+
+<h2 id="message" style="margin-top:20px; display:none; font-size:1.8rem;"></h2>
+
+<!-- Pasta -->
+<img class="cake" id="cake" src="https://i.imgur.com/Er7u5oZ.png">
+
+<!-- Mum -->
+<div class="candle" id="candle"></div>
+<div class="flame" id="flame"></div>
+
+<!-- Müzik -->
+<audio id="music" src="music.mp3"></audio>
+
+<script>
+    function surprise() {
+        // Mesaj
+        const msg = document.getElementById("message");
+        msg.innerText = "Nice mutlu, sağlıklı, harika yıllara! 🎈✨";
+        msg.style.display = "block";
+
+        // Pasta görünür
+        document.getElementById("cake").style.display = "block";
+
+        // Mum + alev görünür
+        document.getElementById("candle").style.display = "block";
+        document.getElementById("flame").style.display = "block";
+
+        // Müzik başlat
+        document.getElementById("music").play();
+
+        // Konfeti yağmuru
+        for (let i = 0; i < 60; i++) {
+            let c = document.createElement("div");
+            c.classList.add("confetti");
+            c.style.left = Math.random() * 100 + "vw";
+            c.style.background = "hsl(" + Math.random()*360 + ",100%,60%)";
+            c.style.animationDuration = (2 + Math.random()*2) + "s";
+            document.body.appendChild(c);
+
+            setTimeout(() => c.remove(), 4000);
+        }
+    }
+
+    // Balonlar otomatik
+    for (let i = 0; i < 20; i++) {
+        let b = document.createElement("div");
+        b.classList.add("balloon");
+        b.style.left = Math.random() * 100 + "vw";
+        b.style.animationDuration = (4 + Math.random() * 4) + "s";
+        b.style.background = "hsl(" + Math.random() * 360 + ", 80%, 70%)";
+        document.body.appendChild(b);
+    }
+</script>
+
+</body>
+</html>
